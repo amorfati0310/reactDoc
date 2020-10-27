@@ -268,3 +268,44 @@ function WarningBanner(props) {
 ```
 
 ### 리스트와 키 
+
+React Element List js map방식과 유사 
+
+```js
+const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((number) =>
+  <li>{number}</li>
+);
+listItems 배열을 <ul>엘리먼트 안에 포함하고 DOM에 렌더링합니다.
+
+ReactDOM.render(
+  <ul>{listItems}</ul>,
+  document.getElementById('root')
+);
+
+각 리스트 항목에 key를 넣어야 한다는 경고 표시가 뜬다. 
+-> key는 리스트 중에 어떤 항목을 변경, 추가 또는 삭제할지 식별하는 것을 돕는다.
+-> data의 고유 id와 맵핑하는 것이 좋은 방법이다. -> id가 없는 경우 index 차선책 
+순서가 바뀔 수 있는 경우는 index로 사용하면 
+```
+
+가독성을 위해 변수로 추출해야 할지 아니면 인라인으로 넣을지는 개발자가 직접 판단해야 합니다. 
+map() 함수가 너무 중첩된다면 컴포넌트로 추출 하는 것이 좋습니다.
+
+### 폼 
+
+```js
+<form>
+  <label>
+    Name:
+    <input type="text" name="name" />
+  </label>
+  <input type="submit" value="Submit" />
+</form>
+
+```
+
+대부분의 경우 기본 form 방식이 아닌 js 함수로 폼 제출을 처리한다. 
+이를 위한 표준 방식은 “제어 컴포넌트 (controlled components)“를 이용 
+
+#### controlled components
