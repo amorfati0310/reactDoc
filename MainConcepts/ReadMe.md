@@ -309,3 +309,138 @@ map() 함수가 너무 중첩된다면 컴포넌트로 추출 하는 것이 좋�
 이를 위한 표준 방식은 “제어 컴포넌트 (controlled components)“를 이용 
 
 #### controlled components
+
+
+
+### 폼 컨트롤트 컴포넌트 vs uncontrolled component 
+
+
+js함수로 폼의 제출을 처리하고 , 입력데이터에 
+접근하도록 관리 
+
+controlled component 
+
+ex) input, textarea, select 
+
+이런 사용자 input을 받는 컴포넌트들은 `single source of truth`로 만들어 두 요소를 결합합니다 
+
+ onChange -> update -> state -> value
+
+textarea, select, input 
+select multiple로 해주고 싶으면 어트리뷰트 true 및 value 배열로 받기 ! 
+
+```jsx
+<select multiple={true} value={['B', 'C']}>
+
+<input type="file" />
+fileApi 를 통해서 조작 
+하지만 값이 읽기 전용이기 때문에 onChange-> state 바로 update하고 sync 맞출 수 없다. 
+비제어 컴포넌트 입니다.
+
+```
+#### 다중입력 제어 하기 
+
+```js
+    this.setState({
+      [name]: value
+    });
+
+
+ <input
+    name="isGoing"
+    type="checkbox"
+    checked={this.state.isGoing}
+    onChange={this.handleInputChange} />
+
+  <input
+    name="numberOfGuests"
+    type="number"
+    value={this.state.numberOfGuests}
+    onChange={this.handleInputChange} />
+
+
+  name 속성을 통해서 다중 입력 제어 
+```
+
+
+#### 제어되는 Input Null 값
+input value null 
+
+prop으로 지정한 경우 사용자가 변경할 수 없다. [O]
+alue를 설정했는데 실수로 undefined나 null로 설정된 경우 수정할 수 있다 [O]
+
+#### Alternatives to Controlled Components
+
+모든 입력 상태를 연결하는 일이 번거로울 수 있다 ! 
+
+- React가 아닌 라이브러리와 React 애플리케이션을 통합하고자 할 때 짜증날 수 있습니다. 이러한 경우에 입력 폼을 구현하기 위한 대체 기술인 비제어 컴포넌트를 확인할 수 있습니다.
+
+#### 기존에 잘 쓰고 있는 library 
+React-hook-form ? -> 
+& Formik
+
+이런 걸 쓰면 이들은 어떤 문제를 해결한 거고, 어떻게 DX를 높일 수 있는지 살펴보고 써볼것 ! 
+
+
+### State 끌어올리기 
+
+source of truth 상위에서 관리 하고 아래 컴포넌트들이 props 드릴링 통해서 
+공유받을 수 있도록 
+보일러 플레이트는 많지만 버그를 찾기 쉽고, 격리하기 쉽게 만든다. 
+-> 이 부분의 단점이나 상태관리를 전역으로 해야 할 경우 -> redux 같은 도구를 
+
+
+### 합성 vs 상속 
+
+Composition vs Inheritance
+
+Composition > 
+
+#### 컴포넌트에 프롭스 담기 
+
+
+children prop 이용 ! 
+
+```jsx
+function FancyBorder(props) {
+  return (
+    <div className={'FancyBorder FancyBorder-' + props.color}>
+      {props.children}
+    </div>
+  );
+}
+
+vue slot과 유사 하지만 props 더 범용성 높음 
+
+```
+#### 특수화 
+
+자주 쓰이는 방식은 -> 일반 컴포넌트-> 구체적인 컴포넌트로 
+```js
+function WelcomeDialog() {
+  return (
+    <Dialog
+      title="Welcome"
+      message="Thank you for visiting our spacecraft!" />
+  );
+}
+
+```
+
+ul가 아닌 기능에 재사용이라면 별도의 모듈로 분리 
++ 
+hook !!! 
+
+#### React로 생각하기 
+
+Photoshop Layer - Sketch Symbol- Component 
+Design System 
+대화해서 맞추기 
+-> 
++ 단일 책임 원칙 
+한 가지 테크닉은 단일 책임 원칙입니다. 이는 하나의 컴포넌트는 한 가지 일을 하는게 이상적이라는 원칙입니다. 하나의 컴포넌트가 커지게 된다면 이는 보다 작은 하위 컴포넌트로 분리되어야 합니다.
+
+top-down 처음에 용이 bottom-up 규모가 커졌을 떄 테스트하면서 작업하기 용이 
+
+
+!단방향 데이터 흐름(one-way data flow)
